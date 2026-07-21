@@ -1,3 +1,4 @@
+console.log("JS ЗАГРУЖЕН");
 console.log("SCRIPT LOADED");
 
 
