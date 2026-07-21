@@ -754,3 +754,24 @@ target="_blank">
 
 
 loadUsers();
+const addBtn = document.getElementById("addUserBtn");
+
+
+if(addBtn){
+
+    addBtn.onclick = () => {
+
+        Telegram.WebApp.showPopup({
+            title: "Добавление",
+            message: "Открываем форму добавления участника",
+            buttons:[
+                {
+                    type:"default",
+                    text:"OK"
+                }
+            ]
+        });
+
+    };
+
+}

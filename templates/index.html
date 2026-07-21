@@ -99,10 +99,9 @@
 
 <!-- ADMIN ADD -->
 
-<button id="addBtn" class="add-button">
-➕ Добавить участника
+<button id="addUserBtn" class="add-btn">
+    ➕ Добавить участника
 </button>
-
 
 <div id="addPanel" class="add-panel">
 
@@ -162,9 +161,10 @@ placeholder="Ссылка TikTok">
 
 
 
-<script src="/static/app.js"></script>
+<script>
 
+window.Telegram.WebApp.ready();
 
-</body>
+</script>
 
-</html>
+<script src="/static/script.js"></script>
