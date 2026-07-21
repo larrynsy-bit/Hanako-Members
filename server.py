@@ -7,10 +7,14 @@ from config import ADMIN_ID
 from database import db
 
 
-app = FastAPI(title="TikTok Mini App")
+app = FastAPI(
+    title="TikTok Members"
+)
 
 
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(
+    directory="templates"
+)
 
 
 app.mount(
@@ -21,9 +25,9 @@ app.mount(
 
 
 
-# ==========================
-# Главная страница
-# ==========================
+# =========================
+# Главная
+# =========================
 
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
@@ -37,69 +41,35 @@ async def index(request: Request):
 
 
 
-# ==========================
-# Добавление пользователя
-# ==========================
+# =========================
+# Проверка админа
+# =========================
+
+def check_admin(user_id):
+
+    try:
+        return int(user_id) == int(ADMIN_ID)
+
+    except:
+
+        return False
+
+
+
+# =========================
+# Добавление участника
+# =========================
 
 @app.post("/api/register")
 async def register(data: dict):
 
 
-    telegram_id = data.get("telegram_id")
-
-
-    if telegram_id != ADMIN_ID:
-
-        return JSONResponse({
-            "success": False,
-            "error": "Access denied"
-        })
-
-
-    username = data.get("username", "")
-    first_name = data.get("first_name", "")
-    last_name = data.get("last_name", "")
-
-    tiktok = data.get("tiktok", "")
-    tiktok_url = data.get("tiktok_url", "")
-
-    avatar = data.get(
-        "avatar",
-        ""
+    telegram_id = data.get(
+        "telegram_id"
     )
 
 
-    db.add_user(
-        telegram_id,
-        username,
-        first_name,
-        last_name,
-        tiktok,
-        tiktok_url,
-        avatar
-    )
-
-
-    return JSONResponse({
-
-        "success": True,
-
-        "message":
-        "Пользователь добавлен"
-
-    })
-
-
-
-# ==========================
-# Получение пользователей
-# ==========================
-
-@app.get("/api/users")
-async def users(admin_id:int):
-
-
-    if admin_id != ADMIN_ID:
+    if not check_admin(telegram_id):
 
         return JSONResponse({
 
@@ -109,16 +79,95 @@ async def users(admin_id:int):
         })
 
 
-    return JSONResponse(
-        db.get_all_users()
+
+    db.add_user(
+
+        telegram_id,
+
+        data.get(
+            "username",
+            ""
+        ),
+
+        data.get(
+            "first_name",
+            ""
+        ),
+
+        data.get(
+            "last_name",
+            ""
+        ),
+
+
+        data.get(
+            "tiktok",
+            ""
+        ),
+
+
+        data.get(
+            "tiktok_url",
+            ""
+        ),
+
+
+        data.get(
+            "avatar",
+            ""
+
+        )
+
     )
 
 
+    return {
+
+        "success":True,
+
+        "message":
+        "Добавлено"
+
+    }
 
 
-# ==========================
-# Количество участников
-# ==========================
+
+
+
+# =========================
+# Все пользователи
+# =========================
+
+@app.get("/api/users")
+async def users(admin_id:int):
+
+
+    if not check_admin(admin_id):
+
+        return JSONResponse({
+
+            "success":False,
+            "error":"Access denied"
+
+        })
+
+
+    return {
+
+        "success":True,
+
+        "users":
+        db.get_all_users()
+
+    }
+
+
+
+
+
+# =========================
+# Количество
+# =========================
 
 @app.get("/api/count")
 async def count():
@@ -133,30 +182,35 @@ async def count():
 
 
 
-# ==========================
+
+# =========================
 # Удаление
-# ==========================
+# =========================
 
 @app.post("/api/delete")
 async def delete(data:dict):
 
 
-    if data.get("admin_id") != ADMIN_ID:
+    if not check_admin(
+        data.get("admin_id")
+    ):
 
-        return JSONResponse({
+        return {
 
             "success":False,
-            "error":"Access denied"
 
-        })
+            "error":
+            "Access denied"
+
+        }
 
 
-    user_id = data.get(
-        "telegram_id"
+
+    db.delete(
+        data.get(
+            "telegram_id"
+        )
     )
-
-
-    db.delete(user_id)
 
 
     return {
@@ -169,9 +223,9 @@ async def delete(data:dict):
 
 
 
-# ==========================
+# =========================
 # Поиск
-# ==========================
+# =========================
 
 @app.get("/api/search")
 async def search(
@@ -180,17 +234,21 @@ async def search(
 ):
 
 
-    if admin_id != ADMIN_ID:
+    if not check_admin(admin_id):
 
-        return JSONResponse({
+        return {
 
             "success":False
 
-        })
+        }
 
 
-    return JSONResponse(
 
+    return {
+
+        "success":True,
+
+        "users":
         db.search(text)
 
-    )
+    }
