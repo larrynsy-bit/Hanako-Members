@@ -1,33 +1,52 @@
-// Telegram
+console.log("SCRIPT LOADED");
+
 
 const tg = window.Telegram.WebApp;
+
 
 tg.ready();
 tg.expand();
 
 
 
+console.log("Telegram OK");
 
-// =======================
-// SEARCH BUTTON
-// =======================
 
+
+
+// SEARCH
 
 const searchButton = document.getElementById("searchButton");
 const searchBox = document.getElementById("searchBox");
 
 
-if(searchButton){
+console.log(
+"searchButton:",
+searchButton
+);
 
-    searchButton.addEventListener("click",()=>{
 
-        console.log("search click");
+console.log(
+"searchBox:",
+searchBox
+);
+
+
+
+if(searchButton && searchBox){
+
+
+    searchButton.onclick = function(){
+
+
+        console.log("SEARCH CLICK");
 
 
         searchBox.classList.toggle("hidden");
 
 
-    });
+    };
+
 
 }
 
@@ -36,90 +55,44 @@ if(searchButton){
 
 
 
-// =======================
-// ADD USER BUTTON
-// =======================
+
+// ADD BUTTON
 
 
 const addUserBtn = document.getElementById("addUserBtn");
 const addPanel = document.getElementById("addPanel");
 
 
-if(addUserBtn){
+
+console.log(
+"addUserBtn:",
+addUserBtn
+);
 
 
-    addUserBtn.addEventListener("click",()=>{
+
+console.log(
+"addPanel:",
+addPanel
+);
 
 
-        console.log("add click");
+
+
+
+if(addUserBtn && addPanel){
+
+
+    addUserBtn.onclick = function(){
+
+
+        console.log("ADD CLICK");
 
 
         addPanel.classList.toggle("active");
 
 
-    });
+    };
 
-
-}
-
-
-
-
-
-
-
-// =======================
-// SAVE BUTTON
-// =======================
-
-
-const saveBtn = document.getElementById("saveBtn");
-
-
-if(saveBtn){
-
-
-saveBtn.addEventListener("click",()=>{
-
-
-let nickname =
-document.getElementById("nickname").value;
-
-
-let tiktok =
-document.getElementById("tiktok").value;
-
-
-let url =
-document.getElementById("tiktokUrl").value;
-
-
-
-console.log(
-nickname,
-tiktok,
-url
-);
-
-
-
-if(!nickname || !tiktok || !url){
-
-
-alert("Заполни все поля");
-
-
-return;
-
-
-}
-
-
-
-alert("Участник добавлен");
-
-
-
-});
 
 }
