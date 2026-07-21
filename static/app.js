@@ -562,3 +562,195 @@ alert(data.error);
 
 
 }
+const addBtn =
+document.getElementById("addBtn");
+
+
+const addPanel =
+document.getElementById("addPanel");
+
+
+
+addBtn.onclick=()=>{
+
+
+addPanel.classList.toggle(
+"active"
+);
+
+
+};
+
+
+
+saveBtn.onclick=async()=>{
+
+
+let data={
+
+
+telegram_id:
+tg.initDataUnsafe.user.id,
+
+
+username:
+tg.initDataUnsafe.user.username,
+
+
+first_name:
+tg.initDataUnsafe.user.first_name,
+
+
+last_name:
+tg.initDataUnsafe.user.last_name,
+
+
+tiktok:
+nickname.value,
+
+
+tiktok_url:
+tiktokUrl.value,
+
+
+avatar:
+tg.initDataUnsafe.user.photo_url || ""
+
+};
+
+
+
+let res =
+await fetch(
+"/api/register",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:
+JSON.stringify(data)
+
+});
+
+
+let result =
+await res.json();
+
+
+
+if(result.success){
+
+
+alert(
+"✅ Добавлено"
+);
+
+
+// обновляем список
+
+loadUsers();
+
+
+
+addPanel.classList.remove(
+"active"
+);
+
+
+}
+
+};
+async function loadUsers(){
+
+
+let res =
+await fetch(
+"/api/users?admin_id="
++
+tg.initDataUnsafe.user.id
+);
+
+
+let users =
+await res.json();
+
+
+
+let box =
+document.getElementById(
+"users"
+);
+
+
+
+box.innerHTML="";
+
+
+
+if(users.length===0){
+
+box.innerHTML=
+`
+<div class="empty">
+Пока нет участников
+</div>
+`;
+
+return;
+
+}
+
+
+
+users.forEach(u=>{
+
+
+box.innerHTML+=`
+
+<div class="card">
+
+
+<img src="${u.avatar || '/static/default.png'}">
+
+
+<div>
+
+<b>
+${u.first_name || ""}
+</b>
+
+<p>
+@${u.username || ""}
+</p>
+
+
+<a href="${u.tiktok_url}"
+target="_blank">
+
+🎵 TikTok
+
+</a>
+
+
+</div>
+
+
+</div>
+
+
+`;
+
+
+});
+
+
+}
+
+
+
+loadUsers();

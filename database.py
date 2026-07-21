@@ -149,17 +149,48 @@ class Database:
 
     def get_all_users(self):
 
-        self.cursor.execute("""
+    self.cursor.execute("""
 
-        SELECT *
+    SELECT *
 
-        FROM users
+    FROM users
 
-        ORDER BY created_at DESC
+    ORDER BY created_at DESC
 
-        """)
+    """)
 
-        return self.cursor.fetchall()
+
+    rows = self.cursor.fetchall()
+
+
+    users=[]
+
+
+    for row in rows:
+
+
+        users.append({
+
+            "telegram_id": row[0],
+
+            "username": row[1],
+
+            "first_name": row[2],
+
+            "last_name": row[3],
+
+            "tiktok": row[4],
+
+            "tiktok_url": row[5],
+
+            "avatar": row[6],
+
+            "created_at": row[7]
+
+        })
+
+
+    return users
 
 
 
