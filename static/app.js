@@ -57,9 +57,11 @@ const ADMIN_ID = 1192656796;
 
 if (telegramUser.id === ADMIN_ID) {
 
+
     // Админ
     userPanel.style.display = "block";
     adminPanel.style.display = "block";
+
     searchButton.style.display = "block";
 
     loadUsers();
@@ -83,7 +85,18 @@ if (telegramUser.id === ADMIN_ID) {
 
     adminPanel.style.display = "none";
 
-}// =========================
+}
+
+// =========================
+// Search Button
+// =========================
+
+searchButton.addEventListener("click", ()=>{
+
+    searchBox.classList.toggle("hidden");
+
+});
+// =========================
 // Register User
 // =========================
 
@@ -213,6 +226,7 @@ function renderUsers(users){
 
     countDiv.innerHTML = users.length + " участников";
 
+
     if(users.length === 0){
 
         usersDiv.innerHTML = `
@@ -222,64 +236,70 @@ function renderUsers(users){
         `;
 
         return;
-
     }
 
+
     users.forEach(user=>{
+
 
         usersDiv.innerHTML += `
 
         <div class="card">
 
-            <h3>${user[2]}</h3>
 
-            <p><b>TikTok:</b> ${user[4]}</p>
+            <div class="avatar">
+                🎵
+            </div>
 
-            <p><b>Telegram:</b> @${user[1]}</p>
 
-            <p><b>ID:</b> ${user[0]}</p>
+            <h3>
+                ${user[2] || user[1]}
+            </h3>
 
-            <p><b>Добавлен:</b> ${user[5]}</p>
+
+            <div class="tiktok">
+
+                🎵 ${user[4]}
+
+            </div>
+
+
+
+            <a 
+            class="tiktok-button"
+            href="${user[5]}"
+            target="_blank">
+
+                Открыть TikTok
+
+            </a>
+
+
+
+            <p>
+            Telegram:
+            @${user[1] || "нет"}
+            </p>
+
+
 
             <button
-                class="delete"
-                onclick="deleteUser(${user[0]})"
-            >
-                🗑 Удалить
+            class="delete"
+            onclick="deleteUser(${user[0]})">
+
+            🗑 Удалить
+
             </button>
+
 
         </div>
 
         `;
 
+
     });
 
 }
-// =========================
-// Search
-// =========================
-
-searchInput.addEventListener("input", ()=>{
-
-    const text = searchInput.value.toLowerCase();
-
-    const cards = document.querySelectorAll(".card");
-
-    cards.forEach(card=>{
-
-        if(card.innerText.toLowerCase().includes(text)){
-
-            card.style.display="block";
-
-        }else{
-
-            card.style.display="none";
-
-        }
-
-    });
-
-});
 // =========================
 // Delete User
 // =========================
