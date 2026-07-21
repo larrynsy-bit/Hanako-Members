@@ -151,19 +151,14 @@ saveButton.addEventListener("click", async () => {
 
             userPanel.innerHTML=`
 
-                <div class="success">
+                if(data.success){
 
-                    <h2>✅ Готово!</h2>
+    alert("✅ Участник добавлен!");
 
-                    <br>
+    location.reload();
 
-                    <p>Ваш TikTok успешно сохранён.</p>
-
-                </div>
-
-            `;
-
-        }else{
+}
+            else{
 
             alert("Ошибка сохранения.");
 
