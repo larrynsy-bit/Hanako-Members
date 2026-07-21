@@ -13,7 +13,6 @@ tg.expand();
 // =========================
 
 const userPanel = document.getElementById("userPanel");
-const adminPanel = document.getElementById("adminPanel");
 
 const saveButton = document.getElementById("saveButton");
 
@@ -26,6 +25,10 @@ const countDiv = document.getElementById("count");
 const searchButton = document.getElementById("searchButton");
 const searchBox = document.getElementById("searchBox");
 const searchInput = document.getElementById("search");
+
+const avatar = document.getElementById("avatar");
+const name = document.getElementById("name");
+const username = document.getElementById("username");
 
 
 // =========================
@@ -46,7 +49,7 @@ if(!telegramUser){
 
 
 // =========================
-// Admin
+// Config
 // =========================
 
 const ADMIN_ID = 1192656796;
@@ -54,42 +57,75 @@ const ADMIN_ID = 1192656796;
 
 
 // =========================
-// Interface
+// Profile
+// =========================
+
+name.innerHTML =
+telegramUser.first_name || "User";
+
+
+username.innerHTML =
+telegramUser.username
+?
+"@" + telegramUser.username
+:
+"";
+
+
+// если Telegram отдаёт фото
+
+if(telegramUser.photo_url){
+
+    avatar.src = telegramUser.photo_url;
+
+}
+
+
+
+
+// =========================
+// Admin check
+// =========================
+
+const isAdmin =
+telegramUser.id === ADMIN_ID;
+
+
+
+if(isAdmin){
+
+    userPanel.style.display="block";
+
+}
+
+
+
+// всем загружаем список
+
+loadUsers();
+
+
+
+
+
+// =========================
+// Search open
 // =========================
 
 
-if(telegramUser.id === ADMIN_ID){
+searchButton.onclick=()=>{
+
+    searchBox.classList.toggle("hidden");
+
+    if(!searchBox.classList.contains("hidden")){
+
+        searchInput.focus();
+
+    }
+
+};
 
 
-    userPanel.style.display = "block";
-
-    adminPanel.style.display = "block";
-
-
-    loadUsers();
-
-
-
-}
-else{
-
-
-    userPanel.innerHTML = `
-
-    <div class="error">
-
-    <h2>⛔ Доступ закрыт</h2>
-
-    <p>
-    Только администратор может добавлять участников.
-    </p>
-
-    </div>
-
-    `;
-
-
-}
 
 
 
@@ -97,19 +133,44 @@ else{
 // Search
 // =========================
 
+searchInput.addEventListener("input",()=>{
 
-if(searchButton){
-
-searchButton.onclick = ()=>{
-
-
-    searchBox.classList.toggle("hidden");
+    let text =
+    searchInput.value.toLowerCase();
 
 
-};
+    document
+    .querySelectorAll(".card")
+    .forEach(card=>{
 
 
-}
+        if(card.innerText
+        .toLowerCase()
+        .includes(text)){
+
+
+            card.style.display="block";
+
+
+        }
+        else{
+
+
+            card.style.display="none";
+
+
+        }
+
+
+    });
+
+
+
+});
+
+
+
+
 
 
 
@@ -121,16 +182,19 @@ searchButton.onclick = ()=>{
 if(saveButton){
 
 
-saveButton.onclick = async ()=>{
+saveButton.onclick=async()=>{
 
 
-let tiktok = tiktokInput.value.trim();
-
-let url = tiktokUrlInput.value.trim();
-
+let tiktok =
+tiktokInput.value.trim();
 
 
-if(tiktok.length < 2){
+let url =
+tiktokUrlInput.value.trim();
+
+
+
+if(!tiktok){
 
     alert("Введите TikTok");
 
@@ -140,16 +204,17 @@ if(tiktok.length < 2){
 
 
 
-saveButton.disabled = true;
+saveButton.disabled=true;
 
-saveButton.innerText="Сохранение...";
+saveButton.innerText="Добавление...";
 
 
 
 try{
 
 
-let response = await fetch("/api/register",{
+let response =
+await fetch("/api/register",{
 
 
 method:"POST",
@@ -177,7 +242,7 @@ last_name:telegramUser.last_name || "",
 
 tiktok:tiktok,
 
-tiktok_url:url
+tiktok_url:url,
 
 photo_url:telegramUser.photo_url || ""
 
@@ -189,17 +254,22 @@ photo_url:telegramUser.photo_url || ""
 
 
 
-let data = await response.json();
+let data =
+await response.json();
 
 
 
 if(data.success){
 
 
-alert("✅ Участник добавлен");
+alert("✅ Добавлено");
 
 
-location.reload();
+loadUsers();
+
+
+tiktokInput.value="";
+tiktokUrlInput.value="";
 
 
 }
@@ -219,7 +289,6 @@ catch(e){
 
 console.log(e);
 
-
 alert("Ошибка сервера");
 
 
@@ -232,12 +301,13 @@ saveButton.disabled=false;
 saveButton.innerText="Добавить";
 
 
-
 };
 
 
-
 }
+
+
+
 
 
 
@@ -253,24 +323,20 @@ async function loadUsers(){
 try{
 
 
-let response = await fetch(
-"/api/users?admin_id="+ADMIN_ID
-);
+let response =
+await fetch("/api/users");
 
 
 
-let users = await response.json();
+let users =
+await response.json();
 
 
 
-if(users.success === false){
+if(!Array.isArray(users)){
 
 
-usersDiv.innerHTML =
-"<div class='error'>Доступ запрещён</div>";
-
-
-return;
+users=[];
 
 
 }
@@ -288,15 +354,21 @@ catch(e){
 console.log(e);
 
 
-usersDiv.innerHTML =
-"<div class='error'>Ошибка загрузки</div>";
+usersDiv.innerHTML=
+`
+<div class="error">
+Ошибка загрузки
+</div>
+`;
+
+
+}
 
 
 }
 
 
 
-}
 
 
 
@@ -320,11 +392,13 @@ if(users.length===0){
 
 
 usersDiv.innerHTML=
-"<div class='error'>Пока нет участников</div>";
-
+`
+<div class="error">
+Пока нет участников
+</div>
+`;
 
 return;
-
 
 }
 
@@ -333,60 +407,75 @@ return;
 users.forEach(user=>{
 
 
-let card=document.createElement("div");
+let card =
+document.createElement("div");
 
 
 card.className="card";
 
 
 
-card.innerHTML=card.innerHTML=`
+card.innerHTML=`
 
 <div class="avatar">
-    <img src="${user[6] || '/static/default.png'}">
+
+<img src="${user[6] || '/static/default.png'}">
+
 </div>
 
 
 <h3>
-${user[2] || user[1]}
+${user[2] || "User"}
 </h3>
 
 
 <div class="username">
-@${user[1] || "нет"}
+@${user[1] || ""}
 </div>
 
 
-
 <a 
-class="tiktok-button"
 href="${user[5]}"
-target="_blank">
+target="_blank"
+class="tiktok-button">
 
-🎵 Открыть TikTok
+🎵 TikTok
 
 </a>
 
 
-
+${isAdmin ? 
+`
 <button class="delete">
 
-🗑 Удалить
+🗑
 
 </button>
+`
+:
+""}
+
+
 
 `;
 
 
 
-card.querySelector(".delete")
-.onclick=()=>{
 
+
+if(isAdmin){
+
+
+card
+.querySelector(".delete")
+.onclick=()=>{
 
 deleteUser(user[0]);
 
-
 };
+
+
+}
 
 
 
@@ -397,8 +486,10 @@ usersDiv.appendChild(card);
 });
 
 
-
 }
+
+
+
 
 
 
@@ -411,16 +502,10 @@ usersDiv.appendChild(card);
 async function deleteUser(id){
 
 
-
-if(!confirm("Удалить участника?")){
+if(!confirm("Удалить?"))
 
 return;
 
-}
-
-
-
-try{
 
 
 let response =
@@ -454,12 +539,12 @@ telegram_id:id
 
 
 
-let result =
+let data =
 await response.json();
 
 
 
-if(result.success){
+if(data.success){
 
 
 loadUsers();
@@ -469,21 +554,7 @@ loadUsers();
 else{
 
 
-alert(result.error || "Ошибка удаления");
-
-
-}
-
-
-
-}
-catch(e){
-
-
-console.log(e);
-
-
-alert("Ошибка соединения");
+alert(data.error);
 
 
 }

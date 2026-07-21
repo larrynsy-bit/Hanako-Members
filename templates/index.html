@@ -21,104 +21,150 @@
 <div class="container">
 
 
-   <div class="header">
 
-    <div class="logo">
+<!-- HEADER -->
+
+<div class="header">
+
+
+    <div class="brand">
+
         TikTok Members
+
     </div>
 
-    <button id="searchButton">
+
+    <button id="searchButton" class="icon-btn">
+
         🔍
+
     </button>
 
+
 </div>
 
 
 
-    <!-- Добавление участника (только админ) -->
-
-    <div id="userPanel">
 
 
-        <div class="form-card">
+<!-- PROFILE -->
+
+<div class="profile-card">
 
 
-            <h2>
-                Добавить участника
-            </h2>
+    <img id="avatar" src="/static/default.png">
 
 
-
-            <input
-                id="tiktok"
-                type="text"
-                placeholder="@nickname"
-            >
+    <div class="profile-info">
 
 
-
-            <input
-                id="tiktokUrl"
-                type="text"
-                placeholder="Ссылка TikTok"
-            >
+        <h3 id="name">
+            User
+        </h3>
 
 
-
-            <button id="saveButton">
-
-                Добавить
-
-            </button>
-
-
-        </div>
+        <span id="username">
+            @username
+        </span>
 
 
     </div>
 
 
-
-
-    <!-- Админ панель -->
-
-    <div id="adminPanel" style="display:none;">
+</div>
 
 
 
-        <div id="searchBox" class="search-box hidden">
 
-    <input
+
+<!-- SEARCH -->
+
+<div id="searchBox" class="search-box hidden">
+
+
+    <input 
         id="search"
-        placeholder="Поиск участников..."
+        type="text"
+        placeholder="Поиск TikTok..."
     >
 
+
+</div>
+
+
+
+
+
+
+
+<!-- ADMIN ADD -->
+
+<div id="userPanel" style="display:none;">
+
+
+<div class="form-card">
+
+
+<h2>
+Добавить участника
+</h2>
+
+
+<input
+id="tiktok"
+placeholder="@nickname"
+>
+
+
+<input
+id="tiktokUrl"
+placeholder="https://tiktok.com/@..."
+>
+
+
+<button id="saveButton">
+
+Добавить
+
+</button>
+
+
+</div>
+
+
 </div>
 
 
 
-        <div class="count-box">
-
-            <span id="count">
-                0 участников
-            </span>
-
-        </div>
 
 
 
 
-        <div id="users">
+<!-- MEMBERS -->
 
-        </div>
+<div class="count-box">
+
+<span id="count">
+
+0 участников
+
+</span>
+
+</div>
 
 
 
-    </div>
+<div id="users">
+
+
+</div>
+
+
 
 
 
 </div>
+
 
 
 <script src="/static/app.js"></script>
