@@ -179,6 +179,8 @@ tiktok:tiktok,
 
 tiktok_url:url
 
+photo_url:telegramUser.photo_url || ""
+
 
 })
 
@@ -338,10 +340,10 @@ card.className="card";
 
 
 
-card.innerHTML=`
+card.innerHTML=card.innerHTML=`
 
 <div class="avatar">
-🎵
+    <img src="${user[6] || '/static/default.png'}">
 </div>
 
 
@@ -350,11 +352,10 @@ ${user[2] || user[1]}
 </h3>
 
 
-<div class="tiktok">
-
-🎵 ${user[4]}
-
+<div class="username">
+@${user[1] || "нет"}
 </div>
+
 
 
 <a 
@@ -362,16 +363,10 @@ class="tiktok-button"
 href="${user[5]}"
 target="_blank">
 
-Открыть TikTok
+🎵 Открыть TikTok
 
 </a>
 
-
-
-<p>
-Telegram:
-@${user[1] || "нет"}
-</p>
 
 
 <button class="delete">
@@ -379,7 +374,6 @@ Telegram:
 🗑 Удалить
 
 </button>
-
 
 `;
 
