@@ -348,3 +348,4 @@ async function deleteUser(id){
     }
 
 }
+alert("JS работает");
