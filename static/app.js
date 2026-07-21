@@ -1,185 +1,396 @@
-const tg = window.Telegram.WebApp;
+// =========================
+// Telegram WebApp
+// =========================
 
+const tg = window.Telegram.WebApp;
 
 tg.ready();
 tg.expand();
 
 
-
-const ADMIN_ID = 1192656796; // <-- сюда свой ID
-
-
-
-const user = tg.initDataUnsafe.user;
-
-
-
-let myID = user ? user.id : 0;
-
-
+// =========================
+// Elements
+// =========================
 
 const userPanel = document.getElementById("userPanel");
+const adminPanel = document.getElementById("adminPanel");
 
 const saveButton = document.getElementById("saveButton");
 
-const usersBox = document.getElementById("users");
+const tiktokInput = document.getElementById("tiktok");
+const tiktokUrlInput = document.getElementById("tiktokUrl");
 
-const count = document.getElementById("count");
+const usersDiv = document.getElementById("users");
+const countDiv = document.getElementById("count");
+
+const searchButton = document.getElementById("searchButton");
+const searchBox = document.getElementById("searchBox");
+const searchInput = document.getElementById("search");
 
 
+// =========================
+// Telegram User
+// =========================
 
-if(myID === ADMIN_ID){
+const telegramUser = tg.initDataUnsafe.user;
 
-    userPanel.classList.remove("hidden");
+
+if(!telegramUser){
+
+    alert("Откройте приложение через Telegram");
+
+    throw new Error("No telegram user");
 
 }
 
 
 
+// =========================
+// Admin
+// =========================
 
-// =================
-// поиск
-// =================
-
-
-document
-.getElementById("searchButton")
-.onclick=()=>{
+const ADMIN_ID = 1192656796;
 
 
-document
-.getElementById("searchBox")
-.classList.toggle("hidden");
+
+// =========================
+// Interface
+// =========================
+
+
+if(telegramUser.id === ADMIN_ID){
+
+
+    userPanel.style.display = "block";
+
+    adminPanel.style.display = "block";
+
+
+    loadUsers();
+
+
+
+}
+else{
+
+
+    userPanel.innerHTML = `
+
+    <div class="error">
+
+    <h2>⛔ Доступ закрыт</h2>
+
+    <p>
+    Только администратор может добавлять участников.
+    </p>
+
+    </div>
+
+    `;
+
+
+}
+
+
+
+// =========================
+// Search
+// =========================
+
+
+if(searchButton){
+
+searchButton.onclick = ()=>{
+
+
+    searchBox.classList.toggle("hidden");
+
+
+};
+
+
+}
+
+
+
+// =========================
+// Add User
+// =========================
+
+
+if(saveButton){
+
+
+saveButton.onclick = async ()=>{
+
+
+let tiktok = tiktokInput.value.trim();
+
+let url = tiktokUrlInput.value.trim();
+
+
+
+if(tiktok.length < 2){
+
+    alert("Введите TikTok");
+
+    return;
+
+}
+
+
+
+saveButton.disabled = true;
+
+saveButton.innerText="Сохранение...";
+
+
+
+try{
+
+
+let response = await fetch("/api/register",{
+
+
+method:"POST",
+
+
+headers:{
+
+
+"Content-Type":"application/json"
+
+
+},
+
+
+body:JSON.stringify({
+
+
+telegram_id:telegramUser.id,
+
+username:telegramUser.username || "",
+
+first_name:telegramUser.first_name || "",
+
+last_name:telegramUser.last_name || "",
+
+tiktok:tiktok,
+
+tiktok_url:url
+
+photo_url:telegramUser.photo_url || ""
+
+
+})
+
+
+});
+
+
+
+let data = await response.json();
+
+
+
+if(data.success){
+
+
+alert("✅ Участник добавлен");
+
+
+location.reload();
+
+
+}
+else{
+
+
+alert(data.error || "Ошибка");
+
+
+}
+
+
+
+}
+catch(e){
+
+
+console.log(e);
+
+
+alert("Ошибка сервера");
+
+
+}
+
+
+
+saveButton.disabled=false;
+
+saveButton.innerText="Добавить";
+
 
 
 };
 
 
 
+}
 
 
 
-// =================
-// загрузка
-// =================
+
+// =========================
+// Load Users
+// =========================
 
 
 async function loadUsers(){
 
 
-let res = await fetch(
-`/api/users?admin_id=${myID}`
+try{
+
+
+let response = await fetch(
+"/api/users?admin_id="+ADMIN_ID
 );
 
 
-let data = await res.json();
+
+let users = await response.json();
 
 
 
-usersBox.innerHTML="";
+if(users.success === false){
 
 
+usersDiv.innerHTML =
+"<div class='error'>Доступ запрещён</div>";
 
-if(!Array.isArray(data))
+
 return;
 
 
-
-count.innerHTML =
-data.length+" участников";
+}
 
 
 
-data.forEach(u=>{
+renderUsers(users);
+
+
+
+}
+catch(e){
+
+
+console.log(e);
+
+
+usersDiv.innerHTML =
+"<div class='error'>Ошибка загрузки</div>";
+
+
+}
+
+
+
+}
+
+
+
+// =========================
+// Render
+// =========================
+
+
+function renderUsers(users){
+
+
+usersDiv.innerHTML="";
+
+
+countDiv.innerHTML =
+users.length+" участников";
+
+
+
+if(users.length===0){
+
+
+usersDiv.innerHTML=
+"<div class='error'>Пока нет участников</div>";
+
+
+return;
+
+
+}
+
+
+
+users.forEach(user=>{
 
 
 let card=document.createElement("div");
 
 
-card.className="user-card";
+card.className="card";
 
 
 
-card.innerHTML=`
+card.innerHTML=card.innerHTML=`
 
-
-<img src="${u.avatar || 
-'https://i.imgur.com/6VBx3io.png'}">
-
-
-
-<div>
+<div class="avatar">
+    <img src="${user[6] || '/static/default.png'}">
+</div>
 
 
 <h3>
-${u.first_name || ""}
-${u.last_name || ""}
+${user[2] || user[1]}
 </h3>
 
 
-<p>
-@${u.username || "user"}
-</p>
-
-
-
-<a href="${u.tiktok_url}" target="_blank">
-
-🎵 ${u.tiktok}
-
-</a>
-
-
+<div class="username">
+@${user[1] || "нет"}
 </div>
 
 
 
-<button class="delete">
-❌
-</button>
+<a 
+class="tiktok-button"
+href="${user[5]}"
+target="_blank">
 
+🎵 Открыть TikTok
+
+</a>
+
+
+
+<button class="delete">
+
+🗑 Удалить
+
+</button>
 
 `;
 
 
 
+card.querySelector(".delete")
+.onclick=()=>{
 
 
-card
-.querySelector(".delete")
-.onclick=async()=>{
-
-
-await fetch("/api/delete",{
-
-method:"POST",
-
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-
-admin_id:myID,
-
-telegram_id:u.telegram_id
-
-
-})
-
-
-});
-
-
-loadUsers();
+deleteUser(user[0]);
 
 
 };
 
 
 
-
-usersBox.appendChild(card);
+usersDiv.appendChild(card);
 
 
 
@@ -192,61 +403,48 @@ usersBox.appendChild(card);
 
 
 
-
-// =================
-// добавить
-// =================
-
-
-saveButton.onclick=async()=>{
+// =========================
+// Delete
+// =========================
 
 
-let nick =
-document.getElementById("tiktok").value;
-
-
-let url =
-document.getElementById("tiktokUrl").value;
+async function deleteUser(id){
 
 
 
-if(!nick)
-return alert("Введите ник");
+if(!confirm("Удалить участника?")){
+
+return;
+
+}
 
 
 
-await fetch("/api/register",{
+try{
+
+
+let response =
+await fetch("/api/delete",{
 
 
 method:"POST",
 
+
 headers:{
+
+
 "Content-Type":"application/json"
+
+
 },
 
 
 body:JSON.stringify({
 
 
-admin_id:myID,
+admin_id:ADMIN_ID,
 
-
-telegram_id:Date.now(),
-
-
-username:nick.replace("@",""),
-
-
-first_name:nick,
-
-
-tiktok:nick,
-
-
-tiktok_url:url,
-
-
-avatar:user.photo_url || ""
+telegram_id:id
 
 
 })
@@ -256,75 +454,40 @@ avatar:user.photo_url || ""
 
 
 
-document
-.getElementById("tiktok")
-.value="";
+let result =
+await response.json();
 
 
-document
-.getElementById("tiktokUrl")
-.value="";
 
+if(result.success){
 
 
 loadUsers();
 
 
-
-};
-
-
+}
+else{
 
 
-
-// поиск
-
-
-document
-.getElementById("search")
-.oninput=async(e)=>{
+alert(result.error || "Ошибка удаления");
 
 
-let text=e.target.value;
-
-
-let res=await fetch(
-
-`/api/search?admin_id=${myID}&text=${text}`
-
-);
-
-
-let data=await res.json();
-
-
-usersBox.innerHTML="";
-
-
-data.forEach(u=>{
-
-
-usersBox.innerHTML+=`
-
-<div class="user-card">
-
-<h3>
-${u.tiktok}
-</h3>
-
-</div>
-
-`;
-
-
-});
-
-
-};
+}
 
 
 
+}
+catch(e){
+
+
+console.log(e);
+
+
+alert("Ошибка соединения");
+
+
+}
 
 
 
-loadUsers();
+}
