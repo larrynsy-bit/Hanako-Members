@@ -64,34 +64,29 @@ document.getElementById(
 
 
 
-const saveBtn =
-document.getElementById(
-    "saveBtn"
-);
+console.log(addUserBtn);
+console.log(addPanel);
 
 
 
-const usersBox =
-document.getElementById(
-    "users"
-);
+if(addUserBtn && addPanel){
 
 
-
-const count =
-document.getElementById(
-    "count"
-);
+    addUserBtn.onclick = ()=>{
 
 
+        console.log("ADD CLICK");
 
 
+        addPanel.classList.toggle(
+            "active"
+        );
 
-console.log(
-"ADD BUTTON",
-addUserBtn
-);
 
+    };
+
+
+}
 
 
 
@@ -139,7 +134,7 @@ addUserBtn.onclick = ()=>{
 
 
     addPanel.classList.toggle(
-        "hidden"
+        "active"
     );
 
 
