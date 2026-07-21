@@ -1,5 +1,3 @@
-/* Discord Theme */
-
 *{
     margin:0;
     padding:0;
@@ -7,402 +5,38 @@
     font-family:Arial,Helvetica,sans-serif;
 }
 
-body{
-
-    background:#1e1f22;
-    color:white;
-
-}
-
-.container{
-
-    width:100%;
-    max-width:700px;
-
-    margin:auto;
-
-    padding:20px;
-
-}
-
-.logo{
-
-    text-align:center;
-
-    font-size:32px;
-
-    font-weight:bold;
-
-    margin-bottom:30px;
-
-}
-
-h2{
-
-    margin-bottom:15px;
-
-}
-
-input{
-
-    width:100%;
-
-    padding:15px;
-
-    border:none;
-
-    outline:none;
-
-    border-radius:10px;
-
-    background:#2b2d31;
-
-    color:white;
-
-    font-size:18px;
-
-    margin-bottom:15px;
-
-}
-
-button{
-
-    width:100%;
-
-    border:none;
-
-    cursor:pointer;
-
-    padding:15px;
-
-    border-radius:10px;
-
-    background:#5865F2;
-
-    color:white;
-
-    font-size:18px;
-
-    transition:.2s;
-
-}
-
-button:hover{
-
-    background:#6b75ff;
-
-}
-
-.top{
-
-    margin-bottom:20px;
-
-}
-
-#count{
-
-    margin-bottom:20px;
-
-    color:#bbbbbb;
-
-}
-
-.card{
-
-text-align:center;
-padding:20px;
-border-radius:25px;
-
-}
-
-
-.avatar{
-
-width:80px;
-height:80px;
-
-margin:0 auto 12px;
-
-border-radius:50%;
-
-overflow:hidden;
-
-}
-
-
-.avatar img{
-
-width:100%;
-height:100%;
-
-object-fit:cover;
-
-}
-
-
-
-.card h3{
-
-font-size:20px;
-
-margin:5px 0;
-
-}
-
-
-
-.username{
-
-color:#aaa;
-
-font-size:15px;
-
-margin-bottom:18px;
-
-}
-
-
-
-.tiktok-button{
-
-display:block;
-
-text-decoration:none;
-
-background:#ff3155;
-
-color:white;
-
-padding:14px;
-
-border-radius:15px;
-
-font-weight:bold;
-
-margin-bottom:12px;
-
-}
-
-
-
-.delete{
-
-width:100%;
-
-border:none;
-
-background:#ff3155;
-
-color:white;
-
-padding:14px;
-
-border-radius:15px;
-
-font-size:16px;
-
-font-weight:bold;
-
-}
-.delete:hover{
-
-    background:#f04747;
-
-}
-
-.success{
-
-    text-align:center;
-
-    margin-top:20px;
-
-    color:#43b581;
-
-}
-
-.error{
-
-    text-align:center;
-
-    color:#f04747;
-
-    margin-top:20px;
-
-}
-.header{
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-
-}
-
-
-#searchButton{
-
-width:32px;
-
-height:32px;
-
-font-size:15px;
-
-padding:0;
-
-}
-
-.search-box{
-
-margin-top:10px;
-
-}
-
-
-.search-box input{
-
-width:100%;
-
-}
-
-
-
-.hidden{
-
-display:none;
-
-}
-
-
-
-.card{
-
-background:#252525;
-
-border-radius:22px;
-
-padding:18px;
-
-margin-top:15px;
-
-box-shadow:0 8px 25px rgba(0,0,0,.25);
-
-}
-
-
-
-.avatar{
-
-width:70px;
-height:70px;
-border-radius:50%;
-overflow:hidden;
-margin-bottom:10px;
-
-}
-
-
-.avatar img{
-
-width:100%;
-height:100%;
-object-fit:cover;
-
-}
-
-
-.tiktok{
-
-background:#111;
-
-padding:12px;
-
-border-radius:15px;
-
-margin:10px 0;
-
-font-weight:bold;
-
-}
-
-
-
-.tiktok-button{
-
-display:block;
-
-text-align:center;
-
-padding:12px;
-
-border-radius:15px;
-
-background:#fe2c55;
-
-color:white;
-
-text-decoration:none;
-
-font-weight:bold;
-
-}
-
-
-
-input{
-
-border-radius:18px!important;
-
-}
-
-
-
-button{
-
-border-radius:18px!important;
-
-}
-/* =========================
-   Modern UI
-========================= */
-
 
 body{
-
     background:#18181b;
-
     color:white;
-
-    font-family:Arial, sans-serif;
-
 }
-
 
 
 .container{
 
-    padding:16px;
+    max-width:600px;
+    margin:auto;
+    padding:15px;
 
 }
 
 
+/* HEADER */
 
 .header{
 
     display:flex;
-
-    align-items:center;
-
     justify-content:space-between;
+    align-items:center;
 
     margin-bottom:20px;
 
 }
 
 
-
 .logo{
 
-    font-size:32px;
-
+    font-size:20px;
     font-weight:800;
 
 }
@@ -412,165 +46,190 @@ body{
 #searchButton{
 
     width:38px;
-
     height:38px;
 
     border-radius:50%;
 
-    border:none;
-
     background:#5865f2;
 
-    color:white;
+    padding:0;
 
     font-size:18px;
 
+}
+
+
+
+
+
+/* PROFILE */
+
+.profile-card{
+
     display:flex;
+    flex-direction:column;
 
     align-items:center;
 
-    justify-content:center;
-
-    cursor:pointer;
-
-    transition:.25s;
-
-}
-
-
-#searchButton:active{
-
-    transform:scale(.85);
+    margin-bottom:20px;
 
 }
 
 
 
+.profile-card img{
 
-.form-card h2{
+    width:80px;
+    height:80px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:3px solid #5865f2;
+
+}
+
+
+
+.profile-info{
+
+    text-align:center;
+
+    margin-top:8px;
+
+}
+
+
+
+.profile-info h3{
+
+    font-size:18px;
+
+}
+
+
+.profile-info span{
+
+    color:#aaa;
+
+    font-size:14px;
+
+}
+
+
+
+
+
+/* SEARCH */
+
+.search-box{
 
     margin-bottom:15px;
 
+    animation:fade .3s;
+
 }
 
 
+.hidden{
+
+    display:none;
+
+}
+
+
+
+
+
+
+
+/* INPUT */
 
 input{
 
     width:100%;
 
-    box-sizing:border-box;
-
-    background:#29292e;
-
-    border:none;
-
-    color:white;
-
     padding:16px;
-
-    border-radius:18px;
 
     margin-bottom:14px;
 
-    font-size:16px;
+    border:none;
 
     outline:none;
 
-    transition:.25s;
+    border-radius:18px;
+
+    background:#29292e;
+
+    color:white;
+
+    font-size:16px;
 
 }
 
 
 
-input:focus{
-
-    background:#33333a;
-
-    transform:translateY(-2px);
-
-}
 
 
+/* BUTTON */
 
 button{
 
     width:100%;
 
-    padding:16px;
+    padding:15px;
 
     border:none;
 
     border-radius:18px;
 
-    background:#5b61ff;
+    background:#5865f2;
 
     color:white;
 
     font-size:17px;
 
-    font-weight:700;
+    font-weight:bold;
 
-    transition:.25s;
-
-}
-
-
-
-button:active{
-
-    transform:scale(.96);
+    cursor:pointer;
 
 }
 
 
 
+
+
+/* COUNT */
 
 .count-box{
 
-    margin-top:15px;
+    color:#aaa;
 
-    opacity:.8;
+    margin:15px 0;
 
 }
 
 
 
-/* карточка */
+
+
+/* USER CARD */
+
 
 .card{
 
-padding:18px;
-}
+    background:#242428;
 
+    border-radius:22px;
 
-.card h3{
+    padding:18px;
 
-margin-top:5px;
-margin-bottom:10px;
-font-size:18px;
+    margin-bottom:15px;
 
-}
+    text-align:center;
 
-
-@keyframes showCard{
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(20px);
-
-    }
-
-
-    to{
-
-        opacity:1;
-
-        transform:none;
-
-    }
+    animation:fade .35s;
 
 }
 
@@ -579,57 +238,50 @@ font-size:18px;
 .avatar{
 
     width:70px;
-
     height:70px;
+
+    margin:auto;
 
     border-radius:50%;
 
-    background:#333;
+    overflow:hidden;
 
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:35px;
-
-    margin-bottom:12px;
+    margin-bottom:10px;
 
 }
 
 
 
-.card h3{
+.avatar img{
 
-font-size:20px;
-margin:8px 0 12px;
-font-weight:700;
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+
+
+.username{
+
+    color:#aaa;
+
+    margin-bottom:15px;
 
 }
 
 
-.tiktok{
 
-    background:#111;
 
-    padding:14px;
-
-    border-radius:16px;
-
-    margin-bottom:12px;
-
-}
-
+/* TIKTOK BUTTON */
 
 
 .tiktok-button{
 
     display:block;
 
-    text-align:center;
-
-    padding:15px;
+    padding:14px;
 
     border-radius:18px;
 
@@ -641,17 +293,8 @@ font-weight:700;
 
     font-weight:bold;
 
-    transition:.25s;
-
 }
 
-
-
-.tiktok-button:active{
-
-    transform:scale(.95);
-
-}
 
 
 
@@ -659,22 +302,40 @@ font-weight:700;
 
     margin-top:12px;
 
-    background:#ff3344;
+    background:#ed4245;
 
 }
 
 
 
-.search-box{
 
-    animation:showCard .3s;
+
+.error{
+
+    text-align:center;
+
+    color:#ff5555;
 
 }
 
 
 
-.hidden{
+@keyframes fade{
 
-    display:none;
+    from{
+
+        opacity:0;
+
+        transform:translateY(15px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+
+    }
 
 }

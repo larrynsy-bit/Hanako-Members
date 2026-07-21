@@ -6,9 +6,12 @@ from fastapi.templating import Jinja2Templates
 from config import ADMIN_ID
 from database import db
 
+
 app = FastAPI(title="TikTok Mini App")
 
+
 templates = Jinja2Templates(directory="templates")
+
 
 app.mount(
     "/static",
@@ -16,6 +19,11 @@ app.mount(
     name="static"
 )
 
+
+
+# ==========================
+# Главная страница
+# ==========================
 
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
@@ -28,35 +36,37 @@ async def index(request: Request):
     )
 
 
+
+# ==========================
+# Добавление пользователя
+# ==========================
+
 @app.post("/api/register")
 async def register(data: dict):
 
-    telegram_id = data["telegram_id"]
+
+    telegram_id = data.get("telegram_id")
 
 
-    # Только администратор может добавлять
     if telegram_id != ADMIN_ID:
 
-        return JSONResponse(
-            {
-                "success": False,
-                "error": "Access denied"
-            }
-        )
+        return JSONResponse({
+            "success": False,
+            "error": "Access denied"
+        })
 
 
-    username = data.get("username")
-    first_name = data.get("first_name")
-    last_name = data.get("last_name")
+    username = data.get("username", "")
+    first_name = data.get("first_name", "")
+    last_name = data.get("last_name", "")
 
-    tiktok = data.get("tiktok")
-
+    tiktok = data.get("tiktok", "")
     tiktok_url = data.get("tiktok_url", "")
 
-
-    # пока аватар пустой,
-    # добавим позже получение с TikTok
-    avatar = ""
+    avatar = data.get(
+        "avatar",
+        ""
+    )
 
 
     db.add_user(
@@ -70,76 +80,117 @@ async def register(data: dict):
     )
 
 
-    return JSONResponse(
-        {
-            "success": True
-        }
-    )
+    return JSONResponse({
+
+        "success": True,
+
+        "message":
+        "Пользователь добавлен"
+
+    })
 
 
-    return JSONResponse(
-        {
-            "success": True
-        }
-    )
+
+# ==========================
+# Получение пользователей
+# ==========================
 
 @app.get("/api/users")
-async def users(admin_id: int):
+async def users(admin_id:int):
+
 
     if admin_id != ADMIN_ID:
 
-        return JSONResponse(
-            {
-                "success": False,
-                "error": "Access denied"
-            }
-        )
+        return JSONResponse({
+
+            "success":False,
+            "error":"Access denied"
+
+        })
+
 
     return JSONResponse(
         db.get_all_users()
     )
 
 
+
+
+# ==========================
+# Количество участников
+# ==========================
+
 @app.get("/api/count")
 async def count():
 
-    return JSONResponse(
-        {
-            "count": db.count()
-        }
-    )
-# ==========================================
-# Удаление пользователя
-# ==========================================
+    return {
+
+        "count":
+        db.count()
+
+    }
+
+
+
+
+# ==========================
+# Удаление
+# ==========================
 
 @app.post("/api/delete")
-async def delete(data: dict):
+async def delete(data:dict):
 
-    if data["admin_id"] != ADMIN_ID:
+
+    if data.get("admin_id") != ADMIN_ID:
 
         return JSONResponse({
-            "success": False,
-            "error": "Access denied"
+
+            "success":False,
+            "error":"Access denied"
+
         })
 
-    db.delete(data["telegram_id"])
 
-    return JSONResponse({
-        "success": True
-    })
-# ==========================================
+    user_id = data.get(
+        "telegram_id"
+    )
+
+
+    db.delete(user_id)
+
+
+    return {
+
+        "success":True
+
+    }
+
+
+
+
+
+# ==========================
 # Поиск
-# ==========================================
+# ==========================
 
 @app.get("/api/search")
-async def search(admin_id:int,text:str):
+async def search(
+    admin_id:int,
+    text:str
+):
+
 
     if admin_id != ADMIN_ID:
 
         return JSONResponse({
+
             "success":False
+
         })
 
+
     return JSONResponse(
+
         db.search(text)
+
     )
