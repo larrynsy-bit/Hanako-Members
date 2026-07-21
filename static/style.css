@@ -506,3 +506,86 @@ button{
     }
 
 }
+.hidden{
+    display:none !important;
+}
+
+
+.add-panel{
+
+    background:#2b2d31;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    margin-top:15px;
+
+    animation:showPanel .25s ease;
+
+}
+
+
+
+.add-panel input{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-bottom:10px;
+
+    border-radius:10px;
+
+    border:none;
+
+    background:#1e1f22;
+
+    color:white;
+
+}
+
+
+
+.add-panel button{
+
+    width:100%;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#5865f2;
+
+    color:white;
+
+    font-size:16px;
+
+}
+
+
+
+@keyframes showPanel{
+
+
+from{
+
+    opacity:0;
+
+    transform:translateY(-10px);
+
+}
+
+
+to{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+
+}
