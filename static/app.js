@@ -51,18 +51,32 @@ const ADMIN_ID = 1192656796;
 
 if (telegramUser.id === ADMIN_ID) {
 
-    userPanel.style.display = "none";
-
+    // Админ
+    userPanel.style.display = "block";
     adminPanel.style.display = "block";
 
     loadUsers();
 
-}else{
+} else {
 
-    userPanel.style.display = "block";
+    // Обычный пользователь
+    userPanel.innerHTML = `
 
-}
-// =========================
+        <div class="error">
+
+            <h2>⛔ Доступ закрыт</h2>
+
+            <p>
+            Добавлять участников может только администратор.
+            </p>
+
+        </div>
+
+    `;
+
+    adminPanel.style.display = "none";
+
+}// =========================
 // Register User
 // =========================
 

@@ -32,10 +32,23 @@ async def index(request: Request):
 async def register(data: dict):
 
     telegram_id = data["telegram_id"]
+
+    # Проверка администратора
+    if telegram_id != ADMIN_ID:
+
+        return JSONResponse(
+            {
+                "success": False,
+                "error": "Access denied"
+            }
+        )
+
+
     username = data.get("username")
     first_name = data.get("first_name")
     last_name = data.get("last_name")
     tiktok = data["tiktok"]
+
 
     db.add_user(
         telegram_id,
@@ -45,12 +58,12 @@ async def register(data: dict):
         tiktok
     )
 
+
     return JSONResponse(
         {
             "success": True
         }
     )
-
 
 @app.get("/api/users")
 async def users(admin_id: int):
