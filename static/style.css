@@ -12,6 +12,7 @@ body{
 }
 
 
+
 .container{
 
     max-width:600px;
@@ -19,6 +20,7 @@ body{
     padding:15px;
 
 }
+
 
 
 /* HEADER */
@@ -34,31 +36,51 @@ body{
 }
 
 
-.logo{
 
-    font-size:20px;
+.brand{
+
+    font-size:22px;
     font-weight:800;
 
 }
 
 
 
+/* SEARCH BUTTON */
+
+.icon-btn,
 #searchButton{
 
-    width:38px;
-    height:38px;
+    width:42px;
+    height:42px;
+
+    min-width:42px;
 
     border-radius:50%;
 
     background:#5865f2;
 
+    border:none;
+
+    color:white;
+
     padding:0;
 
     font-size:18px;
 
+    cursor:pointer;
+
+    transition:.3s;
+
 }
 
 
+.icon-btn:hover,
+#searchButton:hover{
+
+    transform:scale(1.1);
+
+}
 
 
 
@@ -67,6 +89,7 @@ body{
 .profile-card{
 
     display:flex;
+
     flex-direction:column;
 
     align-items:center;
@@ -77,9 +100,10 @@ body{
 
 
 
-.profile-card img{
+#avatar{
 
     width:80px;
+
     height:80px;
 
     border-radius:50%;
@@ -96,7 +120,7 @@ body{
 
     text-align:center;
 
-    margin-top:8px;
+    margin-top:10px;
 
 }
 
@@ -104,9 +128,10 @@ body{
 
 .profile-info h3{
 
-    font-size:18px;
+    font-size:19px;
 
 }
+
 
 
 .profile-info span{
@@ -116,6 +141,7 @@ body{
     font-size:14px;
 
 }
+
 
 
 
@@ -132,12 +158,12 @@ body{
 }
 
 
+
 .hidden{
 
     display:none;
 
 }
-
 
 
 
@@ -150,15 +176,15 @@ input{
 
     width:100%;
 
-    padding:16px;
+    padding:15px;
 
-    margin-bottom:14px;
+    margin-bottom:12px;
 
     border:none;
 
     outline:none;
 
-    border-radius:18px;
+    border-radius:16px;
 
     background:#29292e;
 
@@ -172,27 +198,115 @@ input{
 
 
 
-/* BUTTON */
+/* ALL BUTTONS */
+
 
 button{
 
+    border:none;
+
+    cursor:pointer;
+
+    color:white;
+
+    font-weight:bold;
+
+}
+
+
+
+
+
+/* ADD BUTTON */
+
+
+.add-btn{
+
+
     width:100%;
 
-    padding:15px;
-
-    border:none;
+    height:55px;
 
     border-radius:18px;
 
     background:#5865f2;
 
-    color:white;
-
     font-size:17px;
 
-    font-weight:bold;
+    transition:.3s;
 
-    cursor:pointer;
+}
+
+
+
+.add-btn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+
+
+.add-btn:active{
+
+    transform:scale(.95);
+
+}
+
+
+
+
+
+/* ADD PANEL */
+
+
+.add-panel{
+
+    max-height:0;
+
+    overflow:hidden;
+
+    opacity:0;
+
+    transform:translateY(-15px);
+
+    transition:.4s ease;
+
+}
+
+
+
+.add-panel.active{
+
+    max-height:400px;
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+
+
+
+
+
+/* SAVE */
+
+
+#saveBtn{
+
+    width:100%;
+
+    height:50px;
+
+    margin-top:10px;
+
+    border-radius:15px;
+
+    background:#23a559;
+
+    font-size:17px;
 
 }
 
@@ -202,11 +316,34 @@ button{
 
 /* COUNT */
 
+
 .count-box{
+
+    max-width:600px;
+
+    margin:auto;
+
+    padding:0 15px;
 
     color:#aaa;
 
-    margin:15px 0;
+}
+
+
+
+
+
+
+/* USERS */
+
+
+#users{
+
+    max-width:600px;
+
+    margin:auto;
+
+    padding:15px;
 
 }
 
@@ -218,6 +355,7 @@ button{
 
 
 .card{
+
 
     background:#242428;
 
@@ -235,9 +373,12 @@ button{
 
 
 
+
 .avatar{
 
+
     width:70px;
+
     height:70px;
 
     margin:auto;
@@ -255,11 +396,13 @@ button{
 .avatar img{
 
     width:100%;
+
     height:100%;
 
     object-fit:cover;
 
 }
+
 
 
 
@@ -274,10 +417,12 @@ button{
 
 
 
-/* TIKTOK BUTTON */
+
+/* TIKTOK */
 
 
 .tiktok-button{
+
 
     display:block;
 
@@ -293,9 +438,23 @@ button{
 
     font-weight:bold;
 
+    transition:.3s;
+
 }
 
 
+
+.tiktok-button:hover{
+
+    transform:scale(1.03);
+
+}
+
+
+
+
+
+/* DELETE */
 
 
 .delete{
@@ -303,6 +462,8 @@ button{
     margin-top:12px;
 
     background:#ed4245;
+
+    width:100%;
 
 }
 
@@ -320,6 +481,11 @@ button{
 
 
 
+
+
+/* ANIMATION */
+
+
 @keyframes fade{
 
     from{
@@ -330,6 +496,7 @@ button{
 
     }
 
+
     to{
 
         opacity:1;
@@ -337,109 +504,5 @@ button{
         transform:none;
 
     }
-
-}
-.add-button{
-
-width:100%;
-height:55px;
-
-border:none;
-border-radius:18px;
-
-background:#5865f2;
-color:white;
-
-font-size:18px;
-font-weight:bold;
-
-transition:.3s;
-
-}
-
-
-.add-button:active{
-
-transform:scale(.95);
-
-}
-
-
-
-.add-panel{
-
-
-max-height:0;
-
-overflow:hidden;
-
-opacity:0;
-
-transform:translateY(-20px);
-
-transition:.4s;
-
-}
-
-
-
-.add-panel.active{
-
-
-max-height:400px;
-
-opacity:1;
-
-transform:translateY(0);
-
-}
-
-
-
-.add-panel input{
-
-
-width:100%;
-
-padding:15px;
-
-margin-top:12px;
-
-border-radius:15px;
-
-border:none;
-
-background:#232428;
-
-color:white;
-
-font-size:16px;
-
-
-}
-
-
-
-#saveBtn{
-
-
-margin-top:15px;
-
-width:100%;
-
-height:50px;
-
-border-radius:15px;
-
-border:none;
-
-background:#23a559;
-
-color:white;
-
-font-size:17px;
-
-font-weight:bold;
-
 
 }

@@ -4,6 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>TikTok Members</title>
@@ -21,23 +22,20 @@
 <div class="container">
 
 
-
 <!-- HEADER -->
 
 <div class="header">
 
-
     <div class="brand">
-
         TikTok Members
-
     </div>
 
 
-    <button id="searchButton" class="icon-btn">
-
+    <button 
+        id="searchButton"
+        class="icon-btn"
+    >
         🔍
-
     </button>
 
 
@@ -49,10 +47,16 @@
 
 <!-- PROFILE -->
 
+
 <div class="profile-card">
 
 
-    <img id="avatar" src="/static/default.png">
+    <img 
+        id="avatar"
+        class="avatar"
+        src="/static/default.png"
+    >
+
 
 
     <div class="profile-info">
@@ -77,16 +81,21 @@
 
 
 
+
 <!-- SEARCH -->
 
-<div id="searchBox" class="search-box hidden">
+
+<div 
+id="searchBox"
+class="search-box hidden"
+>
 
 
-    <input 
-        id="search"
-        type="text"
-        placeholder="Поиск TikTok..."
-    >
+<input
+id="search"
+placeholder="Поиск участника..."
+>
+
 
 
 </div>
@@ -97,29 +106,54 @@
 
 
 
-<!-- ADMIN ADD -->
+<!-- ADMIN PANEL -->
 
-<button id="addUserBtn" class="add-btn">
-    ➕ Добавить участника
+
+<div id="adminArea">
+
+
+<button 
+id="addUserBtn"
+class="add-btn"
+>
+
+➕ Добавить участника
+
 </button>
 
-<div id="addPanel" class="add-panel">
 
 
-<input id="nickname"
-placeholder="Никнейм Telegram">
+<div 
+id="addPanel"
+class="add-panel hidden"
+>
 
 
-<input id="tiktok"
-placeholder="TikTok @username">
+
+<input 
+id="nickname"
+placeholder="Имя Telegram"
+>
 
 
-<input id="tiktokUrl"
-placeholder="Ссылка TikTok">
+<input 
+id="tiktok"
+placeholder="TikTok @username"
+>
 
 
-<button id="saveBtn">
+<input 
+id="tiktokUrl"
+placeholder="Ссылка TikTok"
+>
+
+
+<button 
+id="saveBtn"
+>
+
 Добавить
+
 </button>
 
 
@@ -133,10 +167,19 @@ placeholder="Ссылка TikTok">
 
 
 
+</div>
 
-<!-- MEMBERS -->
+
+
+
+
+
+
+<!-- COUNT -->
+
 
 <div class="count-box">
+
 
 <span id="count">
 
@@ -144,8 +187,15 @@ placeholder="Ссылка TikTok">
 
 </span>
 
+
 </div>
 
+
+
+
+
+
+<!-- USERS -->
 
 
 <div id="users">
@@ -157,14 +207,58 @@ placeholder="Ссылка TikTok">
 
 
 
-</div>
 
 
 
 <script>
 
-window.Telegram.WebApp.ready();
+
+const tg = window.Telegram.WebApp;
+
+
+tg.ready();
+
+tg.expand();
+
+
+
+const user = tg.initDataUnsafe.user;
+
+
+
+if(user){
+
+
+document.getElementById("name").innerText =
+user.first_name || "User";
+
+
+document.getElementById("username").innerText =
+"@" + (user.username || "username");
+
+
+
+if(user.photo_url){
+
+document.getElementById("avatar").src =
+user.photo_url;
+
+}
+
+
+}
+
+
 
 </script>
 
+
+
 <script src="/static/script.js"></script>
+
+
+
+</body>
+
+
+</html>
