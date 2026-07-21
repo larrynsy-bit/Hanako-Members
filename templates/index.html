@@ -21,100 +21,78 @@
 <div class="container">
 
 
-   <div class="header">
+<header>
 
-    <div class="logo">
-        TikTok Members
-    </div>
-
-    <button id="searchButton">
-        🔍
-    </button>
-
-</div>
+<h2>
+TikTok Members
+</h2>
 
 
-
-    <!-- Добавление участника (только админ) -->
-
-    <div id="userPanel">
-
-
-        <div class="form-card">
+<button id="searchButton">
+🔍
+</button>
 
 
-            <h2>
-                Добавить участника
-            </h2>
+</header>
 
 
 
-            <input
-                id="tiktok"
-                type="text"
-                placeholder="@nickname"
-            >
+<div id="searchBox" class="hidden">
 
-
-
-            <input
-                id="tiktokUrl"
-                type="text"
-                placeholder="Ссылка TikTok"
-            >
-
-
-
-            <button id="saveButton">
-
-                Добавить
-
-            </button>
-
-
-        </div>
-
-
-    </div>
-
-
-
-
-    <!-- Админ панель -->
-
-    <div id="adminPanel" style="display:none;">
-
-
-
-        <div id="searchBox" class="search-box hidden">
-
-    <input
-        id="search"
-        placeholder="Поиск участников..."
-    >
+<input 
+id="search"
+placeholder="Поиск..."
+>
 
 </div>
 
 
 
-        <div class="count-box">
 
-            <span id="count">
-                0 участников
-            </span>
+<!-- добавление -->
 
-        </div>
+<div id="userPanel" class="card hidden">
 
 
+<h3>
+Добавить участника
+</h3>
 
 
-        <div id="users">
+<input 
+id="tiktok"
+placeholder="@nickname"
+>
 
-        </div>
+
+<input 
+id="tiktokUrl"
+placeholder="Ссылка TikTok"
+>
+
+
+<button id="saveButton">
+Добавить
+</button>
+
+
+</div>
 
 
 
-    </div>
+
+<div class="count">
+
+<span id="count">
+0 участников
+</span>
+
+</div>
+
+
+
+
+<div id="users"></div>
 
 
 
