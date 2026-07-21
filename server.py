@@ -33,7 +33,8 @@ async def register(data: dict):
 
     telegram_id = data["telegram_id"]
 
-    # Проверка администратора
+
+    # Только администратор может добавлять
     if telegram_id != ADMIN_ID:
 
         return JSONResponse(
@@ -47,7 +48,15 @@ async def register(data: dict):
     username = data.get("username")
     first_name = data.get("first_name")
     last_name = data.get("last_name")
-    tiktok = data["tiktok"]
+
+    tiktok = data.get("tiktok")
+
+    tiktok_url = data.get("tiktok_url", "")
+
+
+    # пока аватар пустой,
+    # добавим позже получение с TikTok
+    avatar = ""
 
 
     db.add_user(
@@ -55,7 +64,16 @@ async def register(data: dict):
         username,
         first_name,
         last_name,
-        tiktok
+        tiktok,
+        tiktok_url,
+        avatar
+    )
+
+
+    return JSONResponse(
+        {
+            "success": True
+        }
     )
 
 

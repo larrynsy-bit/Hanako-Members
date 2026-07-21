@@ -18,11 +18,17 @@ const saveButton = document.getElementById("saveButton");
 
 const tiktokInput = document.getElementById("tiktok");
 
+const tiktokUrlInput = document.getElementById("tiktokUrl");
+
 const usersDiv = document.getElementById("users");
 
 const countDiv = document.getElementById("count");
 
 const searchInput = document.getElementById("search");
+
+const searchButton = document.getElementById("searchButton");
+
+const searchBox = document.getElementById("searchBox");
 
 // =========================
 // Telegram User
@@ -54,6 +60,7 @@ if (telegramUser.id === ADMIN_ID) {
     // Админ
     userPanel.style.display = "block";
     adminPanel.style.display = "block";
+    searchButton.style.display = "block";
 
     loadUsers();
 
@@ -83,6 +90,8 @@ if (telegramUser.id === ADMIN_ID) {
 saveButton.addEventListener("click", async () => {
 
     const tiktok = tiktokInput.value.trim();
+
+    const tiktokUrl = tiktokUrlInput.value.trim();
 
     if (tiktok.length < 2) {
 
@@ -116,7 +125,8 @@ saveButton.addEventListener("click", async () => {
 
                 last_name:telegramUser.last_name || "",
 
-                tiktok:tiktok
+                tiktok:tiktok,
+                tiktok_url:tiktokUrl
 
             })
 
