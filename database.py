@@ -1,6 +1,7 @@
 import sqlite3
 from datetime import datetime
 
+
 DB_NAME = "database.db"
 
 
@@ -46,7 +47,7 @@ class Database:
         self.conn.commit()
 
 
-    # Добавление новых колонок в старую базу
+
     def update_database(self):
 
         self.cursor.execute(
@@ -90,58 +91,37 @@ class Database:
         avatar=""
     ):
 
-
         self.cursor.execute("""
 
         INSERT OR REPLACE INTO users
 
         (
-
             telegram_id,
-
             username,
-
             first_name,
-
             last_name,
-
             tiktok,
-
             tiktok_url,
-
             avatar,
-
             created_at
-
         )
-
 
         VALUES(?,?,?,?,?,?,?,?)
 
         """,
 
         (
-
             telegram_id,
-
             username,
-
             first_name,
-
             last_name,
-
             tiktok,
-
             tiktok_url,
-
             avatar,
-
             datetime.now().strftime(
                 "%d.%m.%Y %H:%M"
             )
-
         ))
-
 
         self.conn.commit()
 
@@ -149,48 +129,47 @@ class Database:
 
     def get_all_users(self):
 
-    self.cursor.execute("""
+        self.cursor.execute("""
 
-    SELECT *
+        SELECT *
 
-    FROM users
+        FROM users
 
-    ORDER BY created_at DESC
+        ORDER BY created_at DESC
 
-    """)
-
-
-    rows = self.cursor.fetchall()
+        """)
 
 
-    users=[]
+        rows = self.cursor.fetchall()
 
 
-    for row in rows:
+        users = []
 
 
-        users.append({
+        for row in rows:
 
-            "telegram_id": row[0],
+            users.append({
 
-            "username": row[1],
+                "telegram_id": row[0],
 
-            "first_name": row[2],
+                "username": row[1],
 
-            "last_name": row[3],
+                "first_name": row[2],
 
-            "tiktok": row[4],
+                "last_name": row[3],
 
-            "tiktok_url": row[5],
+                "tiktok": row[4],
 
-            "avatar": row[6],
+                "tiktok_url": row[5],
 
-            "created_at": row[7]
+                "avatar": row[6],
 
-        })
+                "created_at": row[7]
+
+            })
 
 
-    return users
+        return users
 
 
 
@@ -212,7 +191,7 @@ class Database:
 
 
 
-    def search(self,text):
+    def search(self, text):
 
         self.cursor.execute("""
 
@@ -249,7 +228,7 @@ class Database:
 
 
 
-    def delete(self,telegram_id):
+    def delete(self, telegram_id):
 
         self.cursor.execute("""
 
